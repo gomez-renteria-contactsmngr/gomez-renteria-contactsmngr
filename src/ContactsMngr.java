@@ -10,16 +10,16 @@ import java.util.Scanner;
 public class ContactsMngr {
     public static Scanner scanner = new Scanner(System.in);
     static Path contactsPath = Path.of("src/contacts.txt");
-    private  String name;
-    private  String num;
-    public void contactInfo(String name, String num){
-        this.name= name;
-        this.num= num;
-    }
-    public String toString(){
-        return "Name: " + this.name + "Number: " + this.num;
-    }
-    public static List<String> contactArray= new ArrayList<>();
+//    private  String name;
+//    private  String num;
+//    public void contactInfo(String name, String num){
+//        this.name= name;
+//        this.num= num;
+//    }
+//    public String toString(){
+//        return "Name: " + this.name + "Number: " + this.num;
+//    }
+//    public static List<String> contactArray= new ArrayList<>();
     public static int userMenu (){
         System.out.println("Hello welcome to our contact manager. Please select a menu option between 1-5");
         System.out.println("1) View contacts.");
