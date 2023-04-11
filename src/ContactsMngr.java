@@ -53,18 +53,28 @@ public class ContactsMngr {
 //        contactArray.add("Name: " + name + " is now added to contacts.");
     }
     public static void searchContacts()throws IOException{
-        System.out.println("Please enter search info: ");
+        System.out.println("Search for contact by name or number: ");
+        scanner.nextLine();
         String userSearch = scanner.nextLine();
-        System.out.println(userSearch);
+        List<String> contacts = Files.readAllLines(contactsPath);
+        List<String> newContacts = new ArrayList<>();
+        for (String contact : contacts) {
+            if (contact.contains(userSearch)) {
+                System.out.println("Contact found: " + contact);
+                continue;
+            }
+        }
     }
     public static void deleteContacts() throws IOException {
         System.out.println("Please enter name or number of contact you would like to delete: ");
+        scanner.nextLine(); //It was falling through before < added here
         String deletedContact = scanner.nextLine();
         List<String> contacts = Files.readAllLines(contactsPath);
         List<String> newContacts = new ArrayList<>();
         for (String contact : contacts) {
             if (contact.contains(deletedContact)) {
                 System.out.println("Contact deleted: " + contact);
+                continue;
             } else {
                 newContacts.add(contact);
             }
