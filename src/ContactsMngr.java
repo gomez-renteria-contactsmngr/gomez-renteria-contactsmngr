@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class ContactsMngr {
     public static Scanner scanner = new Scanner(System.in);
-    static Path contactsPath = Path.of("contacts.txt");
+    static Path contactsPath = Path.of("src/contacts.txt");
     private  String name;
     private  String num;
     public void contactInfo(String name, String num){
@@ -31,20 +31,25 @@ public class ContactsMngr {
         return userInt;
     }
     public static void viewContacts()throws IOException{
-        System.out.println(Files.readAllLines(contactsPath));
+        List<String> currentData = Files.readAllLines(contactsPath);
+           System.out.println(currentData);
     }
     public static void addContact()throws IOException{
         System.out.println("Name: ");
         String name = scanner.nextLine();
         System.out.println("Number: ");
         String num = scanner.nextLine();
-        Files.write(contactsPath, contactArray, StandardOpenOption.APPEND);
-        contactArray.add("Name: " + name + " is now added to contacts.");
+
+        //Making it one line:
+        String combined = name + num;
+        System.out.println(combined);
+        Files.write(contactsPath, Arrays.asList(combined), StandardOpenOption.APPEND);
+//        contactArray.add("Name: " + name + " is now added to contacts.");
     }
     public static void searchContacts()throws IOException{
         System.out.println("Please enter search info: ");
         String userSearch = scanner.nextLine();
-        System.out.println(Files.readAllLines(contactsPath));
+        System.out.println(userSearch));
     }
     public static void deleteContacts()throws IOException{
         System.out.println("Please enter name or number of contact you would like to delete: ");
