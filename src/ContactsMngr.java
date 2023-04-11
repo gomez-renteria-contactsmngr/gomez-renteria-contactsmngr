@@ -57,11 +57,9 @@ public class ContactsMngr {
         scanner.nextLine();
         String userSearch = scanner.nextLine();
         List<String> contacts = Files.readAllLines(contactsPath);
-        List<String> newContacts = new ArrayList<>();
         for (String contact : contacts) {
             if (contact.contains(userSearch)) {
                 System.out.println("Contact found: " + contact);
-                continue;
             }
         }
     }
@@ -82,9 +80,11 @@ public class ContactsMngr {
         Files.write(contactsPath, newContacts);
     }
     public static void exit() {
+        scanner.nextLine();
+        System.out.println("Are you sure you want to exit? Press 'Y' for yes or 'N' for no.");
         String userInput = scanner.nextLine();
-        System.out.println("are you sure you want to exit?");
-        if(userInput.equalsIgnoreCase("yes")){
+        if(userInput.equals("Y")){
+            System.out.println("You have exited the contacts manager");
             System.exit(0);
         }else{
             System.out.println("Please choose another menu option: ");
