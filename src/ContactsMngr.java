@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class ContactsMngr {
     public static Scanner scanner = new Scanner(System.in);
     static Path contactsPath = Path.of("src/contacts.txt");
-    private  String name;
-    private  String num;
+    private static String name;
+    private static String num;
     public void contactInfo(String name, String num){
         this.name= name;
         this.num= num;
@@ -35,19 +35,23 @@ public class ContactsMngr {
         if (contacts.isEmpty()) {
             System.out.println("No contacts found.");
         } else {
+            System.out.println("Name | Phone number");
+            System.out.println("-------------------");
             for (String contact : contacts) {
-                System.out.println(contact);
+                String[] array= contact.split("\\|");
+                System.out.println(array[0] + " | " + array[1]);
             }
         }
     }
     public static void addContact()throws IOException{
+        scanner.nextLine();
         System.out.println("Name: ");
         String name = scanner.nextLine();
         System.out.println("Number: ");
         String num = scanner.nextLine();
 
         //Making it one line:
-        String combined = name + num;
+        String combined = name +"|" + num;
         System.out.println(combined);
         Files.write(contactsPath, Arrays.asList(combined), StandardOpenOption.APPEND);
 //        contactArray.add("Name: " + name + " is now added to contacts.");
