@@ -30,9 +30,15 @@ public class ContactsMngr {
         int userInt = scanner.nextInt();
         return userInt;
     }
-    public static void viewContacts()throws IOException{
-        List<String> currentData = Files.readAllLines(contactsPath);
-           System.out.println(currentData);
+    public static void viewContacts() throws IOException {
+        List<String> contacts = Files.readAllLines(contactsPath);
+        if (contacts.isEmpty()) {
+            System.out.println("No contacts found.");
+        } else {
+            for (String contact : contacts) {
+                System.out.println(contact);
+            }
+        }
     }
     public static void addContact()throws IOException{
         System.out.println("Name: ");
@@ -51,17 +57,19 @@ public class ContactsMngr {
         String userSearch = scanner.nextLine();
         System.out.println(userSearch);
     }
-    public static void deleteContacts()throws IOException{
+    public static void deleteContacts() throws IOException {
         System.out.println("Please enter name or number of contact you would like to delete: ");
         String deletedContact = scanner.nextLine();
-        System.out.println(Files.readAllLines(contactsPath));
-        for(String contact: contactArray){
-            if(contact.contains(deletedContact)){
-                continue;
+        List<String> contacts = Files.readAllLines(contactsPath);
+        List<String> newContacts = new ArrayList<>();
+        for (String contact : contacts) {
+            if (contact.contains(deletedContact)) {
+                System.out.println("Contact deleted: " + contact);
+            } else {
+                newContacts.add(contact);
             }
-            contactArray.remove(contact);
         }
-        System.out.println("Contact has been deleted.");
+        Files.write(contactsPath, newContacts);
     }
     public static void exit() {
         String userInput = scanner.nextLine();
