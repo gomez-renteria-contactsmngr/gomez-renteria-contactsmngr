@@ -49,7 +49,7 @@ public class ContactsMngr {
     public static void searchContacts()throws IOException{
         System.out.println("Please enter search info: ");
         String userSearch = scanner.nextLine();
-        System.out.println(userSearch));
+        System.out.println(userSearch);
     }
     public static void deleteContacts()throws IOException{
         System.out.println("Please enter name or number of contact you would like to delete: ");
