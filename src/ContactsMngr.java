@@ -50,11 +50,31 @@ public class ContactsMngr {
         System.out.println("Number: ");
         String num = scanner.nextLine();
 
-        //Making it one line:
-        String combined = name +"|" + num;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num.length(); i++) {
+            char c = num.charAt(i);
+            if (Character.isDigit(c)) {
+                sb.append(c);
+            }
+        }
+        String digitsOnly = sb.toString();
+
+
+        StringBuilder formattedNum = new StringBuilder(digitsOnly);
+        int len = formattedNum.length();
+        for (int i = 3; i < len; i += 4) {
+            formattedNum.insert(i, '-');
+        }
+
+
+        if (formattedNum.length() >= 3) {
+            formattedNum = new StringBuilder("(" + formattedNum.substring(0, 3) + ")" + formattedNum.substring(3));
+        }
+
+
+        String combined = name + "|" + formattedNum.toString();
         System.out.println(combined);
         Files.write(contactsPath, Arrays.asList(combined), StandardOpenOption.APPEND);
-//        contactArray.add("Name: " + name + " is now added to contacts.");
     }
     public static void searchContacts()throws IOException{
         System.out.println("Search for contact by name or number: ");
