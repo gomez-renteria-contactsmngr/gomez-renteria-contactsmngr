@@ -43,39 +43,61 @@ public class ContactsMngr {
             }
         }
     }
-    public static void addContact()throws IOException{
+    public static void addContact()throws IOException {
+        List<String> contactArray = Files.readAllLines(contactsPath);
         scanner.nextLine();
         System.out.println("Name: ");
         String name = scanner.nextLine();
         System.out.println("Number: ");
         String num = scanner.nextLine();
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < num.length(); i++) {
-            char c = num.charAt(i);
-            if (Character.isDigit(c)) {
-                sb.append(c);
+        for (int j = 0; j < contactArray.size(); j++) {
+            System.out.println(contactArray.get(j).split("\\|")[0]);
+            if (name.equalsIgnoreCase(contactArray.get(j).split("\\|")[0])) {
+                System.out.println("That contact already exists.  Do you want to replace it? Enter 'Y' for yes or 'N' for no.");
+                String userInput = scanner.nextLine();
+                if (userInput.equalsIgnoreCase("Y")) {
+                    String combined = name + "|" + stringMaker(num);
+                    contactArray.set(j, combined);
+                    Files.write(contactsPath, contactArray);
+                    break;
+                } else {
+                    String combined = name + "|" + stringMaker(num);
+                    Files.write(contactsPath, Arrays.asList(combined), StandardOpenOption.APPEND);
+                    break;
+                }
+            } else if (j == contactArray.size() - 1) {
+                String combined = name + "|" + stringMaker(num);
+                Files.write(contactsPath, Arrays.asList(combined), StandardOpenOption.APPEND);
             }
         }
-        String digitsOnly = sb.toString();
-
-
-        StringBuilder formattedNum = new StringBuilder(digitsOnly);
-        int len = formattedNum.length();
-        for (int i = 3; i < len; i += 4) {
-            formattedNum.insert(i, '-');
-        }
-
-
-        if (formattedNum.length() >= 3) {
-            formattedNum = new StringBuilder("(" + formattedNum.substring(0, 3) + ")" + formattedNum.substring(3));
-        }
-
-
-        String combined = name + "|" + formattedNum.toString();
-        System.out.println(combined);
-        Files.write(contactsPath, Arrays.asList(combined), StandardOpenOption.APPEND);
     }
+        public static String stringMaker (String contact){
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < contact.length(); i++) {
+                char c = contact.charAt(i);
+                if (Character.isDigit(c)) {
+                    sb.append(c);
+                }
+            }
+            String digitsOnly = sb.toString();
+
+
+            StringBuilder formattedNum = new StringBuilder(digitsOnly);
+            int len = formattedNum.length();
+            for (int i = 3; i < len; i += 4) {
+                formattedNum.insert(i, '-');
+            }
+
+
+            if (formattedNum.length() >= 3) {
+                formattedNum = new StringBuilder("(" + formattedNum.substring(0, 3) + ")" + formattedNum.substring(3));
+            }
+
+
+            String combined = name + "|" + formattedNum.toString();
+            System.out.println(combined);
+            return formattedNum.toString();
+        }
     public static void searchContacts()throws IOException{
         System.out.println("Search for contact by name or number: ");
         scanner.nextLine();
