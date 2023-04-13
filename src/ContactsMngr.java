@@ -129,7 +129,7 @@ public class ContactsMngr {
         scanner.nextLine();
         System.out.println("Are you sure you want to exit? Press 'Y' for yes or 'N' for no.");
         String userInput = scanner.nextLine();
-        if(userInput.equals("Y")){
+        if(userInput.equalsIgnoreCase("Y")){
             System.out.println("You have exited the contacts manager");
             System.exit(0);
         }else{
